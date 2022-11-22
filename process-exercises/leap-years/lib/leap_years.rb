@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
 def leap_year?(year)
-  (year % 400).zero?
+  if (year % 400).zero?
+    return true
+  elsif (year % 100).zero?
+    return false
+  end
 end
