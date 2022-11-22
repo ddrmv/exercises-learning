@@ -27,7 +27,7 @@ RSpec.describe '#leap_years' do
     end
   end
 
-  it 'raises error for input that is not a number' do
-    expect { leap_year?('2000') }.to raise_error 'Year should be a number'
+  it 'raises error for input that is not an integer' do
+    expect { leap_year?('2000') }.to raise_error 'Year should be an integer'
   end
 end

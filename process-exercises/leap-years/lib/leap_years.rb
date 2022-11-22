@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
+require_relative './valid_years'
+
 def leap_year?(year)
-  raise 'Year should be a number' unless year.is_a? Numeric
+  valid_years?(year)
 
   if (year % 400).zero?
     true
