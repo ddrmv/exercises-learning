@@ -15,4 +15,8 @@ RSpec.describe '#get_middle' do
   it 'returns middle two letters from even-length string' do
     expect(get_middle('middle')).to eq 'dd'
   end
+
+  it 'raises error if input is empty string or nil' do
+    expect { get_middle('') }.to raise_error 'Input should be non-empty string.'
+  end
 end
