@@ -1,3 +1,3 @@
 def ten_minute_walk?(walk)
-  return false
+  walk.length == 10
 end
