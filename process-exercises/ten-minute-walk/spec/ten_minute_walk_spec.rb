@@ -8,4 +8,13 @@ RSpec.describe '#ten_minute_walk?' do
     expect(ten_minute_walk?('nnnnssss'.split(""))).to eq false
     expect(ten_minute_walk?('nnnnnsssss'.split(""))).to eq true
   end
+
+  context 'keeps track of location'
+  it 'returns true if start and end location are the same' do
+    expect(ten_minute_walk?('nnnwwsssee'.split(""))).to eq true
+  end
+
+  it 'returns false if start and end location are different' do
+    expect(ten_minute_walk?('nnnwwssses'.split(""))).to eq false
+  end
 end
