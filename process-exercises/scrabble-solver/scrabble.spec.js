@@ -10,8 +10,10 @@ describe("Scrabble", () => {
     expect(scrabble3.getScore()).toEqual(0);
   });
 
-  it("returns 1 for 'a'", () => {
-    const scrabble = new Scrabble("a");
-    expect(scrabble.getScore()).toEqual(1);
+  it("returns 1 for 'a' or 'e'", () => {
+    const scrabble1 = new Scrabble("a");
+    const scrabble2 = new Scrabble("e");
+    expect(scrabble1.getScore()).toEqual(1);
+    expect(scrabble2.getScore()).toEqual(1);
   });
 });

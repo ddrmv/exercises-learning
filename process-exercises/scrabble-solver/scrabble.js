@@ -5,7 +5,10 @@ class Scrabble {
   }
 
   getScore = () => {
-    if (this.word === "a") {
+    if (this.word === "") {
+      return 0;
+    }
+    if ("aeioulnrst".includes(this.word)) {
       this.score = 1;
     }
     return this.score;
