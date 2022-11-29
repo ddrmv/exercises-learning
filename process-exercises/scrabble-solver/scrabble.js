@@ -8,26 +8,24 @@ class Scrabble {
     if (this.word === "") {
       return 0;
     }
-    if ("aeioulnrst".includes(this.word)) {
-      this.score += 1;
-    }
-    if ("dg".includes(this.word)) {
-      this.score += 2;
-    }
-    if ("bcmp".includes(this.word)) {
-      this.score += 3;
-    }
-    if ("fhvwy".includes(this.word)) {
-      this.score += 4;
-    }
-    if ("k".includes(this.word)) {
-      this.score += 5;
-    }
-    if ("jx".includes(this.word)) {
-      this.score += 8;
-    }
-    if ("qz".includes(this.word)) {
-      this.score += 10;
+    return this.valueLetter(this.word);
+  };
+
+  valueLetter = (letter) => {
+    if ("aeioulnrst".includes(letter)) {
+      return 1;
+    } else if ("dg".includes(letter)) {
+      return 2;
+    } else if ("bcmp".includes(letter)) {
+      return 3;
+    } else if ("fhvwy".includes(letter)) {
+      return 4;
+    } else if ("k".includes(letter)) {
+      return 5;
+    } else if ("jx".includes(letter)) {
+      return 8;
+    } else if ("qz".includes(letter)) {
+      return 10;
     }
     return this.score;
   };
