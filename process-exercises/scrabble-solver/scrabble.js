@@ -5,10 +5,13 @@ class Scrabble {
   }
 
   getScore = () => {
-    if (this.word === "") {
+    if (this.word === "" || this.word == null) {
       return 0;
     }
-    return this.valueLetter(this.word);
+    this.word.split("").forEach((letter) => {
+      this.score += this.valueLetter(letter);
+    });
+    return this.score;
   };
 
   valueLetter = (letter) => {

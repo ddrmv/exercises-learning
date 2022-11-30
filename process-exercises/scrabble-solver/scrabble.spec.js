@@ -31,4 +31,9 @@ describe("Scrabble", () => {
     expect(scrabble5.getScore()).toEqual(8);
     expect(scrabble6.getScore()).toEqual(10);
   });
+
+  it("returns 6 for street", () => {
+    const scrabble1 = new Scrabble("street");
+    expect(scrabble1.getScore()).toEqual(6);
+  });
 });
