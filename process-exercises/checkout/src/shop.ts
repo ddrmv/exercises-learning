@@ -10,6 +10,18 @@ export class Shop {
   }
 
   checkout(shoppingList: string) {
-    return this._items[0].price;
+    if (shoppingList.length < 1) {
+      return -1;
+    }
+    return this.findItem(shoppingList[0]).price;
+  }
+
+  private findItem(itemName: string) {
+    for (let i = 0; i < this._items.length; i++) {
+      if (itemName === this._items[i].name) {
+        return this._items[i];
+      }
+    }
+    throw new Error("Item not found in inventory");
   }
 }

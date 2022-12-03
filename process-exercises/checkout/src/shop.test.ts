@@ -12,5 +12,8 @@ describe("Shop", () => {
     shop.addItem(itemC);
     shop.addItem(itemD);
     expect(shop.checkout("A")).toBe(50);
+    expect(shop.checkout("B")).toBe(30);
+    expect(shop.checkout("C")).toBe(20);
+    expect(shop.checkout("D")).toBe(15);
   });
 });
