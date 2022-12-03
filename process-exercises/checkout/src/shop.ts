@@ -1,4 +1,5 @@
 import { Item } from "./item";
+
 export class Shop {
   _items: Item[];
   constructor() {
@@ -13,9 +14,34 @@ export class Shop {
     if (!this.validateShoppingList(shoppingList)) {
       return -1;
     }
+
     let total = 0;
+    let basket = new Map();
+
     for (let i = 0; i < shoppingList.length; i++) {
-      total += this.findItem(shoppingList[i]).price;
+      let letter = shoppingList[i];
+      if (basket.has(letter)) {
+        basket.set(letter, basket.get(letter) + 1);
+      } else {
+        basket.set(letter, 1);
+      }
+    }
+
+    for (let letter of basket.keys()) {
+      let item = this.findItem(letter);
+      if (item.hasOffer && item.offerNumber && item.offerPrice) {
+        let timesOfferInBasket = Math.floor(
+          basket.get(letter) / item.offerNumber
+        );
+        if (timesOfferInBasket >= 1) {
+          basket.set(
+            letter,
+            basket.get(letter) - timesOfferInBasket * item.offerNumber
+          );
+          total += timesOfferInBasket * item.offerPrice;
+        }
+      }
+      total += basket.get(letter) * item.price;
     }
     return total;
   }

@@ -38,4 +38,13 @@ describe("Shop", () => {
     expect(shop.checkout("AB")).toBe(80);
     expect(shop.checkout("AA")).toBe(100);
   });
+
+  it("returns total price including an offer", () => {
+    const shop = new Shop();
+    const itemA = new Item("A", 50, true, 3, 130);
+    shop.addItem(itemA);
+    expect(shop.checkout("AAA")).toBe(130);
+    expect(shop.checkout("AAAAAA")).toBe(260);
+    expect(shop.checkout("AAAA")).toBe(180);
+  });
 });
