@@ -13,7 +13,11 @@ export class Shop {
     if (shoppingList.length < 1) {
       return -1;
     }
-    return this.findItem(shoppingList[0]).price;
+    let total = 0;
+    for (let i = 0; i < shoppingList.length; i++) {
+      total += this.findItem(shoppingList[i]).price;
+    }
+    return total;
   }
 
   private findItem(itemName: string) {
