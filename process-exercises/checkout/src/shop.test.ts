@@ -17,11 +17,16 @@ describe("Shop", () => {
     expect(shop.checkout("D")).toBe(15);
   });
 
-  it("throws error if item not in inventory", () => {
+  it("returns -1 if input is empty string", () => {
     const shop = new Shop();
-    expect(() => {
-      shop.checkout("A");
-    }).toThrow("Item not found in inventory");
+    expect(shop.checkout("")).toBe(-1);
+  });
+
+  it("returns -1 if input is lower case", () => {
+    const shop = new Shop();
+    const itemA = new Item("A", 50);
+    shop.addItem(itemA);
+    expect(shop.checkout("a")).toBe(-1);
   });
 
   it("returns total price for two items", () => {
