@@ -280,32 +280,231 @@ root.render(<LoginControl />);
 // keys don't need to be globally unique
 // keys are for React, they don't get passed in, if needed, use a different prop
 
-function ListItem(props) {
-  return <li>{props.value}</li>;
-}
+// function ListItem(props) {
+//   return <li>{props.value}</li>;
+// }
+// // const NumberList = (props) => {
+// //   const numbers = props.numbers;
+// //   const listItems = numbers.map((number) => (
+// //     <ListItem key={number.toString()} value={number} />
+// //   ));
+// //   return <ul>{listItems}</ul>;
+// // };
+
+// // could use JSX to import directly the map result
 // const NumberList = (props) => {
 //   const numbers = props.numbers;
-//   const listItems = numbers.map((number) => (
-//     <ListItem key={number.toString()} value={number} />
-//   ));
-//   return <ul>{listItems}</ul>;
+//   return (
+//     <ul>
+//       {numbers.map((number) => (
+//         <ListItem key={number.toString()} value={number} />
+//       ))}
+//     </ul>
+//   );
 // };
 
-// could use JSX to import directly the map result
-const NumberList = (props) => {
-  const numbers = props.numbers;
-  return (
-    <ul>
-      {numbers.map((number) => (
-        <ListItem key={number.toString()} value={number} />
-      ))}
-    </ul>
-  );
+// const numbers = [1, 2, 3, 4, 5];
+// const root = ReactDOM.createRoot(document.getElementById("root"));
+// root.render(<NumberList numbers={numbers} />);
+
+////////////////////////////////////////////////////////////////////////////////
+// Forms - controlled components
+////////////////////////////////////////////////////////////////////////////////
+
+// in React <input type="text"> <textarea> and <select> work similarly (value)
+// file input is uncontrolled
+// if a value is set without handler, it can be editable if it was set to null
+
+// class NameForm extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = { value: "" };
+//   }
+
+//   handleChange = (event) => {
+//     this.setState({ value: event.target.value });
+//   };
+
+//   handleSubmit = (event) => {
+//     alert("A name was submitted: " + this.state.value);
+//     event.preventDefault();
+//   };
+
+//   render() {
+//     return (
+//       <form onSubmit={this.handleSubmit}>
+//         <label>
+//           Name:
+//           <input
+//             /* textarea uses the same syntax in React, with value*/
+//             type="text"
+//             value={this.state.value}
+//             onChange={this.handleChange}
+//           />
+//         </label>
+//         <input type="submit" value="Submit" />
+//       </form>
+//     );
+//   }
+// }
+
+//////////////////
+// Handling multiple inputs
+//////////////////
+// class Reservation extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       isGoing: true,
+//       numberOfGuests: 2,
+//     };
+
+//     this.handleInputChange = this.handleInputChange.bind(this);
+//   }
+
+//   handleInputChange(event) {
+//     const target = event.target;
+//     const value = target.type === "checkbox" ? target.checked : target.value;
+//     const name = target.name;
+//     this.setState({
+//       [name]: value,
+//     });
+//   }
+
+//   render() {
+//     return (
+//       <form>
+//         <label>
+//           Is going:
+//           <input
+//             name="isGoing"
+//             type="checkbox"
+//             checked={this.state.isGoing}
+//             onChange={this.handleInputChange}
+//           />
+//         </label>
+//         <br />
+//         <label>
+//           Number of guests:
+//           <input
+//             name="numberOfGuests"
+//             type="number"
+//             value={this.state.numberOfGuests}
+//             onChange={this.handleInputChange}
+//           />
+//         </label>
+//       </form>
+//     );
+//   }
+// }
+
+// the two below are equivalent (first uses ES6 "compound property name")
+// this.setState({
+//   [name]: value,
+// });
+
+// var partialState = {};
+// partialState[name] = value;
+// this.setState(partialState);
+
+// const root = ReactDOM.createRoot(document.getElementById("root"));
+// root.render(<NameForm />);
+
+////////////////////////////////////////////////////////////////////////////////
+// Lifting State Up
+////////////////////////////////////////////////////////////////////////////////
+
+const scaleNames = {
+  c: "Celsius",
+  f: "Fahrenheit",
 };
 
-const numbers = [1, 2, 3, 4, 5];
+const toCelsius = (fahrenheit) => {
+  return ((fahrenheit - 32) * 5) / 9;
+};
+
+const toFahrenheit = (celsius) => {
+  return (celsius * 9) / 5 - 32;
+};
+
+const tryConvert = (temperature, convert) => {
+  const input = parseFloat(temperature);
+  if (Number.isNaN(input)) {
+    return "";
+  }
+  const output = convert(input);
+  const rounded = Math.round(output * 10) / 10;
+  return rounded.toString();
+};
+
+const BoilingVerdict = (props) => {
+  if (props.celsius >= 100) {
+    return <p>This water will boil.</p>;
+  } else {
+    return <p>This water will not boil.</p>;
+  }
+};
+
+class TemperatureInput extends React.Component {
+  handleChange = (event) => {
+    this.props.onTemperatureChange(event.target.value);
+  };
+
+  render = () => {
+    const temperature = this.props.temperature;
+    const scale = this.props.scale;
+    return (
+      <fieldset>
+        <legend>Enter temperature in {scaleNames[scale]}:</legend>
+        <input value={temperature} onChange={this.handleChange} />
+      </fieldset>
+    );
+  };
+}
+
+class Calculator extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleCelsiusChange = this.handleCelsiusChange.bind(this);
+    this.handleFahrenheitChange = this.handleFahrenheitChange.bind(this);
+    this.state = { temperature: "", scale: "c" };
+  }
+
+  handleCelsiusChange(temperature) {
+    this.setState({ scale: "c", temperature });
+  }
+
+  handleFahrenheitChange(temperature) {
+    this.setState({ scale: "f", temperature });
+  }
+
+  render() {
+    const scale = this.state.scale;
+    const temperature = this.state.temperature;
+    const celsius =
+      scale === "f" ? tryConvert(temperature, toCelsius) : temperature;
+    const fahrenheit =
+      scale === "c" ? tryConvert(temperature, toFahrenheit) : temperature;
+    return (
+      <div>
+        <TemperatureInput
+          scale="c"
+          temperature={celsius}
+          onTemperatureChange={this.handleCelsiusChange}
+        />{" "}
+        <TemperatureInput
+          scale="f"
+          temperature={fahrenheit}
+          onTemperatureChange={this.handleFahrenheitChange}
+        />{" "}
+        <BoilingVerdict celsius={parseFloat(celsius)} />{" "}
+      </div>
+    );
+  }
+}
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<NumberList numbers={numbers} />);
+root.render(<Calculator />);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
