@@ -196,6 +196,117 @@ root.render(<Toggle />);
 // Conditional Rendering
 ////////////////////////////////////////////////////////////////////////////////
 
+/*
+// conditionally render elements
+const UserGreeting = (props) => {
+  return <h1>Welcome back!</h1>;
+};
+
+const GuestGreeting = (props) => {
+  return <h1>Please sign up.</h1>;
+};
+
+function Greeting(props) {
+  const isLoggedIn = props.isLoggedIn;
+  if (isLoggedIn) {
+    return <UserGreeting />;
+  }
+  return <GuestGreeting />;
+}
+
+// element variables
+const LoginButton = (props) => {
+  return <button onClick={props.onClick}>Login</button>;
+};
+
+const LogoutButton = (props) => {
+  return <button onClick={props.onClick}>Logout</button>;
+};
+
+class LoginControl extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { isLoggedIn: false };
+  }
+
+  handleLoginClick = () => {
+    this.setState({ isLoggedIn: true });
+  };
+
+  handleLogoutClick = () => {
+    this.setState({ isLoggedIn: false });
+  };
+
+  render() {
+    const isLoggedIn = this.state.isLoggedIn;
+    let button;
+    if (isLoggedIn) {
+      button = <LogoutButton onClick={this.handleLogoutClick} />;
+    } else {
+      button = <LoginButton onClick={this.handleLoginClick} />;
+    }
+    return (
+      <div>
+        <Greeting isLoggedIn={isLoggedIn} />
+        {button}{" "}
+      </div>
+    );
+  }
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<LoginControl />);
+*/
+
+// conditionally rendering a component with embedded JSX expressions:
+// - with {conditionHere && <h1>This is condidional</h1> }  // returns 0
+// - w/ ?: { conditionHere ? <h1>Big</h1> : <h4>Smaller</h4> }
+
+// hide a component by returning null instead of it's render output
+// const WarningBanner = (props) => {
+//   if (!props.warn) {
+//     return null;
+//   }
+
+//   return <div className="warning">Warning!</div>;
+// };
+
+////////////////////////////////////////////////////////////////////////////////
+// Lists and keys
+////////////////////////////////////////////////////////////////////////////////
+// keys need to be provided to lists to provide li with stable identity
+// if keys not provided, will use indexes (bad), avoid
+// the key should be in the container context, not the eliment intself
+// keys don't need to be globally unique
+// keys are for React, they don't get passed in, if needed, use a different prop
+
+function ListItem(props) {
+  return <li>{props.value}</li>;
+}
+// const NumberList = (props) => {
+//   const numbers = props.numbers;
+//   const listItems = numbers.map((number) => (
+//     <ListItem key={number.toString()} value={number} />
+//   ));
+//   return <ul>{listItems}</ul>;
+// };
+
+// could use JSX to import directly the map result
+const NumberList = (props) => {
+  const numbers = props.numbers;
+  return (
+    <ul>
+      {numbers.map((number) => (
+        <ListItem key={number.toString()} value={number} />
+      ))}
+    </ul>
+  );
+};
+
+const numbers = [1, 2, 3, 4, 5];
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<NumberList numbers={numbers} />);
+
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
