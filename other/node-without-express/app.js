@@ -1,20 +1,32 @@
+const fs = require("fs");
+
 const app = (req, res) => {
-  if (req.url == "/") {
+  if (req.url === "/") {
     res.writeHead(200, { "Content-Type": "text/html" });
-    res.write("<html><body><p>This is home Page.</p></body></html>");
-    res.end();
-  } else if (req.url == "/student") {
-    res.writeHead(200, { "Content-Type": "text/html" });
-    res.write("<html><body><p>This is student Page.</p></body></html>");
-    res.end();
-  } else if (req.url == "/admin") {
-    res.writeHead(200, { "Content-Type": "text/html" });
-    res.write("<html><body><p>This is admin Page.</p></body></html>");
-    res.end();
-  } else {
-    res.writeHead(404, { "Content-Type": "text/html" });
-    res.write("<html><body><p>ERROR 404! Invalid Request!</p></body></html>");
-    res.end();
+    res.write("<html>");
+    res.write("<head><title>Enter</title></head>");
+    res.write(
+      '<body><form action="/message" method="POST"><input type="text" name="message"><button type="submit">Send</button></form></body>'
+    );
+    res.write("</html");
+    return res.end();
+  }
+  if (req.url === "/message" && req.method === "POST") {
+    const body = [];
+    req.on("data", (chunk) => {
+      console.log(chunk);
+      body.push(chunk);
+    });
+
+    req.on("end", () => {
+      const parsedBody = Buffer.concat(body).toString();
+      const message = parsedBody.split("=")[1];
+      fs.writeFile("message.txt", message, (err) => {
+        res.statusCode = 302;
+        res.setHeader("Location", "/");
+        return res.end();
+      });
+    });
   }
 };
 
