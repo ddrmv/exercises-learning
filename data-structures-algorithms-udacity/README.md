@@ -31,3 +31,5 @@ priority queue - assign a priority on enqueue, dequeue element with highest prio
 
 ## Searching and sorting
 
+### Binary search
+O=log2(n) efficiency - search space halved every step
