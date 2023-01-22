@@ -50,3 +50,9 @@ Using pivot. Worst case for near sorted arrays (recursion don't cut the array mu
 In place, O(nlog(n)).  
 Different implenentations.
 Pivot can be at start, end, middle, take median of range at end, etc.
+
+## Maps and hashing
+
+### Maps
+Map = <key, value>  
+The keys of a map are a Set.  
