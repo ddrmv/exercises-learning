@@ -33,3 +33,20 @@ priority queue - assign a priority on enqueue, dequeue element with highest prio
 
 ### Binary search
 O=log2(n) efficiency - search space halved every step
+
+### Recursion
+Needs initial condition (base case).  
+The parameter needs to be updated.  
+The function calls itself.
+
+### Bubble sort
+Constant space complexity, in-place sorting. O(n**2)
+
+### Merge sort
+Divide and conquer. O(n*log(n)), auxilliary space O(n)
+
+### Quick sort
+Using pivot. Worst case for near sorted arrays (recursion don't cut the array much).  
+In place, O(nlog(n)).  
+Different implenentations.
+Pivot can be at start, end, middle, take median of range at end, etc.
