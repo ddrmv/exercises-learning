@@ -60,3 +60,27 @@ Lookups in constant time (1), not linear time (n).
 A hash function takes a value and uses it to create a list index to the value.  
 Collisions - solutions (with donsides): larger lists, buckets storing collections.  
 Load factor = Number of entries / Number of buckets.
+
+## Trees
+
+### Trees info
+
+Rood, nodes, fully connected, no cycles. Ancestor/descendant (parent/child) - levels.  
+Siblinds, leaves.  Extenral node (leaf), internal node (intermediate).
+Edges - connections.  
+Pack - group of nodes.  
+Height - distance from root to most distant leaf. A leaf has height of 0.  
+Dept - distance to the root. Root has 0, first child 1.  
+
+### Traversal
+
+BFS - Breath First Search - Every node on same level before visiting child nodes.  
+* Level order (a BFS) - Root, all level 1, all level 2 (convention is left to right)...  
+DFS - Depth First Search - All clind nodes first.  
+* Pre-order - Check off a parent immediately, before seeing its children.
+* In-order - Check off a parent after checking its left child and coming back to it.
+* Post-order - Check off a parent after checking all its children.
+
+Binary tree - at most two children (0, 1 or 2).  
+Perfect tree - each node has 2 children.  
+Use helper recursive function plus starting-point function.
