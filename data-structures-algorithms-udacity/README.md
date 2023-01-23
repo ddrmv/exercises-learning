@@ -56,3 +56,7 @@ Pivot can be at start, end, middle, take median of range at end, etc.
 ### Maps
 Map = <key, value>  
 The keys of a map are a Set.  
+Lookups in constant time (1), not linear time (n).
+A hash function takes a value and uses it to create a list index to the value.  
+Collisions - solutions (with donsides): larger lists, buckets storing collections.  
+Load factor = Number of entries / Number of buckets.
