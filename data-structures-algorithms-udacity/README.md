@@ -84,3 +84,7 @@ DFS - Depth First Search - All clind nodes first.
 Binary tree - at most two children (0, 1 or 2).  
 Perfect tree - each node has 2 children.  
 Use helper recursive function plus starting-point function.
+
+### Binary Search Tree (BST)
+log(n)  
+Unbalanced is worst case - lenear time O(n).  
